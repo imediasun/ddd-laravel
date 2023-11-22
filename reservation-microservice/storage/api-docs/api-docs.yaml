@@ -1,0 +1,432 @@
+openapi: 3.0.0
+info:
+  title: 'Laravel OpenApi Demo Documentation'
+  description: 'L5 Swagger OpenApi description'
+  contact:
+    email: andreii.lopushanskyi@upthrust.eu
+  license:
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+servers:
+  -
+    url: 'https://api-7e4d094ba9b0.deltablue.io/'
+    description: 'Demo API Server'
+paths:
+  /auth/token:
+    post:
+      tags:
+        - Authentication
+      summary: 'authenticate new user'
+      description: 'Returns access tokend and refresh token'
+      operationId: authenticate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+      responses:
+        200:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                properties:
+                  access_token:
+                    type: string
+                type: object
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+      security:
+        -
+          token: []
+  /api/Companies:
+    get:
+      tags:
+        - Companies
+      summary: 'show full list of Companies'
+      description: 'Returns full list of Companies with pagination'
+      operationId: list
+      responses:
+        200:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Company'
+                type: object
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+      security:
+        -
+          token: []
+    post:
+      tags:
+        - Companies
+      summary: 'Create Company'
+      description: 'Returns Company data'
+      operationId: create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCompanyRequest'
+      responses:
+        200:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+      security:
+        -
+          bearerAuth: []
+  /api/Companies-list:
+    get:
+      tags:
+        - Companies
+      summary: 'show full list of Companies'
+      description: 'Returns full list of Companies with pagination'
+      operationId: CompaniesList
+      responses:
+        200:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Company'
+                type: object
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+      security:
+        -
+          token: []
+  '/api/Companies/{Company}':
+    patch:
+      tags:
+        - Companies
+      summary: 'update information of single Company'
+      description: 'Returns Company'
+      operationId: update
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID of Company'
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: '1'
+      responses:
+        200:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Company'
+                type: object
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+      security:
+        -
+          token: []
+  /api/Companies-import:
+    post:
+      tags:
+        - Companies
+      summary: 'Post Companies data'
+      description: 'Returns Company data'
+      operationId: postCompaniesData
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCompaniesRequest'
+      responses:
+        200:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+      security:
+        -
+          bearerAuth: []
+components:
+  schemas:
+    AuthenticationRequest:
+      title: AuthenticationRequest
+      description: 'Store Channel request body data'
+      required:
+        - username
+        - password
+      properties:
+        username:
+          title: username
+          description: Username
+          type: string
+          example: test5_admin@gmail.com
+        client_id:
+          title: client_id
+          description: client_id
+          type: string
+          example: '2'
+        client_secret:
+          title: client_secret
+          description: client_secret
+          type: string
+          example: lfHkdrK4fWVTBs1SS8QlsVo57u0TjxUIJsAZelYN
+        password:
+          title: password
+          description: Password
+          type: string
+          example: sunimedia
+      type: object
+    CreateCompanyRequest:
+      title: CreateCompanyRequest
+      description: CreateCompanyRequest
+      required:
+        - legal_name
+        - country
+        - marketing_name
+        - address
+        - city
+        - zip
+        - state
+        - office_region
+        - office_sub_region
+        - phone
+        - website
+        - email
+      properties:
+        legal_name:
+          title: legal_name
+          description: legal_name
+          type: string
+          example: Cinionic
+        country:
+          title: country
+          description: country
+          type: string
+          example: USA
+        marketing_name:
+          title: marketing_name
+          description: marketing_name
+          type: string
+          example: 'Cinionic MV'
+        address:
+          title: address
+          description: address
+          type: string
+          example: 'Rue Du Martin 238'
+        city:
+          title: city
+          description: city
+          type: string
+          example: 'New York'
+        zip:
+          title: zip
+          description: zip_code
+          type: string
+          example: '1332'
+        state:
+          title: state
+          description: state
+          type: string
+          example: NewYork
+        office_region:
+          title: office_region
+          description: office_region
+          type: string
+          example: NewYork
+        office_sub_region:
+          title: office_sub_region
+          description: office_sub_region
+          type: string
+          example: NewYork
+        phone:
+          title: phone
+          description: phone
+          type: string
+          example: '+380965441120'
+        website:
+          title: website
+          description: website
+          type: string
+          example: 'http://cinionic.com'
+        email:
+          title: email
+          description: email
+          type: string
+          example: dev.magellan@gmail.com
+        lat:
+          title: lat
+          description: lat
+          type: string
+          example: '57.00001'
+        lon:
+          title: lon
+          description: lon
+          type: string
+          example: '57.00001'
+      type: object
+    PostCompaniesRequest:
+      title: PostCompanyRequest
+      description: PostCompanyRequest
+      required:
+        - legal_name
+        - country
+        - marketing_name
+        - address
+        - city
+        - zip
+        - state
+        - office_region
+        - office_sub_region
+        - phone
+        - website
+        - email
+      type: object
+    Company:
+      title: Company
+      description: 'Company model'
+      properties:
+        id:
+          title: ID
+          description: ID
+          type: integer
+          format: int64
+          example: 1
+        legal_name:
+          title: legal_name
+          description: 'name of the Company'
+          type: string
+          format: string
+          example: 'test Company'
+        country:
+          title: country
+          description: 'country of the Company'
+          type: string
+          format: string
+          example: USA
+        marketing_name:
+          title: marketing_name
+          description: 'marketing name of the Company'
+          type: string
+          format: string
+          example: Testimonal
+        address:
+          title: address
+          description: 'address of the Company'
+          type: string
+          format: string
+          example: 'PO BOX 12 35 Santa Monica'
+        city:
+          title: city
+          description: 'city of the Company'
+          type: string
+          format: string
+          example: Orlando
+        zip:
+          title: zip
+          description: 'zip_code of the Company'
+          type: string
+          format: string
+          example: '1332'
+        state:
+          title: state
+          description: 'state of the Company'
+          type: string
+          format: string
+          example: 'New York'
+        office_region:
+          title: office_region
+          description: 'office_region of the Company'
+          type: string
+          format: string
+          example: District
+        office_sub_region:
+          title: office_sub_region
+          description: 'office_sub_region of the Company'
+          type: string
+          format: string
+          example: 'Sub District'
+        phone:
+          title: phone
+          description: 'phone of the Company'
+          type: string
+          format: string
+          example: '3245678'
+        website:
+          title: website
+          description: 'website of the Company'
+          type: string
+          format: string
+          example: www.disnay.com
+        email:
+          title: email
+          description: 'email of the Company'
+          type: string
+          format: string
+          example: test@test.com
+        lat:
+          title: lat
+          description: 'latitude of the Company'
+          type: string
+          format: string
+          example: '50.7523976220287'
+        lon:
+          title: lon
+          description: 'longitude of the Company'
+          type: string
+          format: string
+          example: '50.7523976220287'
+      type: object
+tags:
+  -
+    name: Companies
+    description: 'API Endpoints of Companies'

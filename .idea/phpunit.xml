@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PHPUnit">
+    <option name="directories">
+      <list>
+        <option value="$PROJECT_DIR$/api-backend/tests/Unit" />
+        <option value="$PROJECT_DIR$/api-backend/tests/Feature" />
+        <option value="$PROJECT_DIR$/billing-microservice/tests/Unit" />
+        <option value="$PROJECT_DIR$/billing-microservice/tests/Feature" />
+        <option value="$PROJECT_DIR$/user-microservice/tests/Unit" />
+        <option value="$PROJECT_DIR$/user-microservice/tests/Feature" />
+        <option value="$PROJECT_DIR$/reservation-microservice/tests/Unit" />
+        <option value="$PROJECT_DIR$/reservation-microservice/tests/Feature" />
+        <option value="$PROJECT_DIR$/billing-microservce/tests/Unit" />
+        <option value="$PROJECT_DIR$/billing-microservce/tests/Feature" />
+      </list>
+    </option>
+  </component>
+</project>
